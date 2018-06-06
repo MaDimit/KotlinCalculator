@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         for (pair in operators) {
             pair.key.setOnClickListener {
-                if (input_field.text.isNotEmpty()) {
+                if (input_field.text.isNotEmpty() && !containsOtherOperator(input_field.text.substring(input_field.text.length - 1))) {
                     if (containsOtherOperator()) {
                         computeResult()
                     }
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else {
                 val strTwo = inputText.substring(inputText.indexOf(operator) + 1)
-                if (!strTwo.contains(dot)){
+                if (!strTwo.contains(dot)) {
                     resultStr = if (strTwo.isEmpty()) "$zero$dot" else dot
                 }
             }
@@ -106,8 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun containsOtherOperator(): Boolean {
-        val input = input_field.text.toString()
+    fun containsOtherOperator(input: String = input_field.text.toString()): Boolean {
         return input.contains(OPERATOR_DIVIDE)
                 || input.contains(OPERATOR_ADD)
                 || input.contains(OPERATOR_MULTIPLY)
