@@ -59,7 +59,9 @@ class MainActivity : AppCompatActivity() {
         for (pair in operators) {
             pair.key.setOnClickListener {
                 if (input_field.text.isNotEmpty()) {
-                    if (containsOtherOperator()) { computeResult() }
+                    if (containsOtherOperator()) {
+                        computeResult()
+                    }
                     operator = pair.value
                     valueOne = (input_field.text.toString()).toDouble()
                     input_field.setText("${input_field.text}$operator")
@@ -72,13 +74,18 @@ class MainActivity : AppCompatActivity() {
             val zero = getString(R.string.zero)
             val dot = getString(R.string.dot)
             val inputText = input_field.text.toString()
-            if (!inputText.contains(dot)) {
-                if (inputText.isEmpty()) {
-                    input_field.setText("${inputText}${zero}${dot}")
-                } else {
-                    input_field.setText("${inputText}${dot}")
+            var resultStr = ""
+            if (operator == "") {
+                if (!inputText.contains(dot)) {
+                    resultStr = if (inputText.isEmpty()) "$zero$dot" else dot
+                }
+            } else {
+                val strTwo = inputText.substring(inputText.indexOf(operator) + 1)
+                if (!strTwo.contains(dot)){
+                    resultStr = if (strTwo.isEmpty()) "$zero$dot" else dot
                 }
             }
+            input_field.setText("$inputText$resultStr")
         }
 
         btn_del.setOnClickListener {
